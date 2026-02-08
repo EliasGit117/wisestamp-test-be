@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -24,6 +24,7 @@ import { AccessTokenGuard } from '@src/modules/auth/guards/access-token.guard';
 import { RefreshTokenGuard } from '@src/modules/auth/guards/refresh-token.guard';
 import { RefreshTokenCommand } from '@src/modules/auth/cqrs/commands/refresh-token.command';
 import { GetMeQuery } from '@src/modules/auth/cqrs/queries/get-me.query';
+import { SignOutCommand } from '@src/modules/auth/cqrs/commands/sign-out.command';
 
 
 @ApiTags('Authentication')
@@ -88,7 +89,20 @@ export class AuthController {
   @ApiInternalServerErrorResponse()
   @ApiCreatedResponse({ type: SignUpResultDto })
   @ApiOperation({ summary: 'Sign up', description: 'Sign up using email and password' })
-  async signUp(@Body() body: SignUpRequestDto, @Res({ passthrough: true }) res: FastifyReply): Promise<SignUpResultDto> {
+  async signUp(@Body() body: SignUpRequestDto): Promise<SignUpResultDto> {
     return await this.commandBus.execute(new SignUpCommand(body));
+  }
+
+  @Post("sign-out")
+  @HttpCode(200)
+  @UseGuards(AccessTokenGuard)
+  @ApiUnauthorizedResponse()
+  @ApiOkResponse()
+  @ApiOperation({ summary: 'Sign out' })
+  async signOut(@Res({ passthrough: true }) res: FastifyReply) {
+    await this.commandBus.execute(new SignOutCommand());
+
+    res.clearCookie(AuthKey.AccessToken);
+    res.clearCookie(AuthKey.RefreshToken);
   }
 }

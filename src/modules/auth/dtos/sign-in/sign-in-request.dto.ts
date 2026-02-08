@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
 
 export class SignInRequestDto {
@@ -9,9 +9,11 @@ export class SignInRequestDto {
   }
 
   @IsEmail()
+  @IsString()
   @ApiProperty({ example: 'vash.stampede@icloud.com' })
   email: string;
 
+  @IsString()
   @MinLength(5)
   @MaxLength(255)
   @ApiProperty({ example: 'Vash.Stampede_671' })

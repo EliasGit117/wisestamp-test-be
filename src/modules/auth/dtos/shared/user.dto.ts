@@ -3,7 +3,7 @@ import { UserRole, UserStatus } from '@src/modules/auth/entities/user.entity';
 
 export class UserDto {
 
-  constructor(properties: Partial<UserDto>) {
+  constructor(properties: UserDto) {
     Object.assign(this, properties);
   }
 

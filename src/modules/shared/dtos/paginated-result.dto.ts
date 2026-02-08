@@ -21,7 +21,7 @@ export class PaginatedResultDto<T> implements IPaginationResult<T> {
   @ApiProperty({ description: "Total number of pages", example: 7 })
   totalPages: number;
 
-  @ApiProperty({ description: "Number of items per page", example: 20 })
+  @ApiProperty({ description: "Number of items per page", example: 10, maximum: 100 })
   limit: number;
 
   @ApiProperty({ description: "Current page number", example: 1, })
