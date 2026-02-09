@@ -38,10 +38,8 @@ export class AuthController {
     private readonly commandBus: CommandBus
   ) {
     const sharedCookieOptions: CookieSerializeOptions = {
-      domain: 'localhost',
-      sameSite: 'none',
+      sameSite: 'lax',
       httpOnly: true,
-      secure: true,
       path: '/',
     };
 
