@@ -79,8 +79,8 @@ export class RefreshTokenEntity {
   expires: Date;
 
   @CreateDateColumn()
-  created: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated: Date;
+  updatedAt: Date;
 }

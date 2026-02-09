@@ -28,11 +28,10 @@ async function bootstrap() {
 
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  app.enableCors({ origin: configService.get<string>('APP_URL') ?? 'http://localhost:4000', credentials: true });
+
   await app.register(fastifyCookie, { secret: configService.getOrThrow<string>('COOKIES_SECRET') });
   await app.register(multipart);
-  app.enableCors({ origin: 'http://localhost:4000', credentials: true });
-
-
   await configureOpenapi(app);
   await app.listen(port, '0.0.0.0');
 }

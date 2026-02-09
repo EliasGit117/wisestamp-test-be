@@ -13,8 +13,8 @@ export class SignatureDtoFactory {
       templateId: entity.templateId,
       userId: entity.userId,
       payload: entity.payload,
-      created: entity.created.toISOString(),
-      updated: entity.updated.toISOString(),
+      createdAt: entity.createdAt.toISOString(),
+      updatedAt: entity.updatedAt.toISOString(),
     })
   }
 

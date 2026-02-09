@@ -26,8 +26,8 @@ export class UserDto {
   status: UserStatus;
 
   @ApiProperty({ example: new Date().toISOString() })
-  created: string;
+  createdAt: string;
 
   @ApiProperty({ example: new Date().toISOString() })
-  updated: string;
+  updatedAt: string;
 }

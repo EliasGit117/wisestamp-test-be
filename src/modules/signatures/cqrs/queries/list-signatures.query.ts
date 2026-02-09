@@ -26,7 +26,7 @@ export class ListSignatureQueryHandler implements IQueryHandler<ListSignatureQue
   constructor(
     private readonly clsService: ClsService,
     private readonly signaturesRepository: SignaturesRepository,
-    private readonly signatureDtoFactory: SignatureDtoFactory,
+    private readonly signatureDtoFactory: SignatureDtoFactory
   ) {}
 
   async execute(query: ListSignatureQuery): Promise<PaginatedResultDto<SignatureDto>> {
@@ -34,7 +34,7 @@ export class ListSignatureQueryHandler implements IQueryHandler<ListSignatureQue
     if (!accessTokenPayload)
       throw new UnauthorizedException();
 
-    const res = await this.signaturesRepository.getPaginated(query, { order: { created: 'DESC' } });
+    const res = await this.signaturesRepository.getPaginated(query, { order: { createdAt: 'DESC' } });
     const mappedItems = this.signatureDtoFactory.fromEntities(res.items);
 
     return { ...res, items: mappedItems };

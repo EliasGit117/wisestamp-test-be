@@ -15,8 +15,8 @@ export class UserDtoFactory {
       lastName: user.lastName,
       status: user.status,
       role: user.role,
-      created: user.created.toISOString(),
-      updated: user.updated.toISOString(),
+      createdAt: user.createdAt.toISOString(),
+      updatedAt: user.updatedAt.toISOString(),
     })
   }
 

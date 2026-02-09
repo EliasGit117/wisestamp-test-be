@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from '@root/db/datasource';
 import { LoggerModule } from 'nestjs-pino';
@@ -8,6 +8,8 @@ import { ClsModule, ClsService } from "nestjs-cls";
 import { FastifyRequest } from 'fastify';
 import { AccessTokenDto } from '@src/modules/auth/dtos/shared/access-token.dto';
 import { RefreshTokenDto } from '@src/modules/auth/dtos/shared/refresh-token.dto';
+import { InMemoryCacheService } from '@src/modules/shared/services/in-memory-cache.service';
+import { ScheduleModule } from "@nestjs/schedule";
 
 
 declare module 'nestjs-cls' {
@@ -20,10 +22,11 @@ declare module 'nestjs-cls' {
   }
 }
 
-
+@Global()
 @Module({
   imports: [
     CqrsModule.forRoot(),
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     TypeOrmModule.forRoot(dataSourceOptions),
     LoggerModule.forRoot({
@@ -52,6 +55,7 @@ declare module 'nestjs-cls' {
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [InMemoryCacheService],
+  exports: [InMemoryCacheService],
 })
 export class SharedModule {}

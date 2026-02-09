@@ -24,12 +24,10 @@ import { ApiPaginatedResponse } from '@src/modules/shared/decorators/api-paginat
 @Controller('signatures')
 export class SignaturesController {
 
-
   constructor(
     private readonly queryBus: QueryBus,
     private readonly commandBus: CommandBus
   ) {}
-
 
   @Get()
   @UseGuards(AccessTokenGuard)
@@ -47,10 +45,8 @@ export class SignaturesController {
   @ApiBadRequestResponse()
   @ApiOperation({ summary: 'Get generated signature' })
   async getGenerated(@Param("id", ParseIntPipe) id: number) {
-    const signature = await this.queryBus.execute(new GetGeneratedSignatureQuery(id));
-    return { signature };
+    return  this.queryBus.execute(new GetGeneratedSignatureQuery(id));
   }
-
 
   @Post()
   @UseGuards(AccessTokenGuard)

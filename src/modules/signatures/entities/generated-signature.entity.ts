@@ -11,12 +11,13 @@ import { SignatureEntity } from "./signature.entity";
 @Entity({ name: "generated_signatures" })
 @Index(["signatureId"], { unique: true })
 export class GeneratedSignatureEntity extends BaseEntity {
+
   @OneToOne(() => SignatureEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: "signature_id" })
   signature: SignatureEntity;
 
-  @Column({ name: "signature_id", type: "uuid" })
-  signatureId: string;
+  @Column({ name: "signature_id" })
+  signatureId: number;
 
   @Column({ type: "text" })
   html: string;

@@ -28,8 +28,8 @@ export class SignatureDto {
   payload: Record<string, string>;
 
   @ApiProperty({ example: new Date().toISOString() })
-  created: string;
+  createdAt: string;
 
   @ApiProperty({ example: new Date().toISOString() })
-  updated: string;
+  updatedAt: string;
 }

@@ -6,12 +6,14 @@ import { signaturesServiceProviders } from '@src/modules/signatures/services/sig
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SignatureEntity } from '@src/modules/signatures/entities/signature.entity';
 import { SignaturesRepository } from '@src/modules/signatures/cqrs/repositories/signatures.repository';
+import { GeneratedSignatureEntity } from '@src/modules/signatures/entities/generated-signature.entity';
 
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       SignatureEntity,
+      GeneratedSignatureEntity
     ]),
   ],
   controllers: [SignaturesController],
