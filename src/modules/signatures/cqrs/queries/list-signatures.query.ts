@@ -34,7 +34,10 @@ export class ListSignatureQueryHandler implements IQueryHandler<ListSignatureQue
     if (!accessTokenPayload)
       throw new UnauthorizedException();
 
-    const res = await this.signaturesRepository.getPaginated(query, { order: { createdAt: 'DESC' } });
+    const res = await this.signaturesRepository.getPaginated(query, {
+      where: { userId: accessTokenPayload.userId },
+      order: { createdAt: 'DESC' },
+    });
     const mappedItems = this.signatureDtoFactory.fromEntities(res.items);
 
     return { ...res, items: mappedItems };
